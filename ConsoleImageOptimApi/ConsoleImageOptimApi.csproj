@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Maricopa County Library District Web Team</Authors>
+    <Company>Maricopa County Library District</Company>
+    <Copyright>Copyright (c) 2022 Maricopa County Library District</Copyright>
+    <Description>Demonstrate using the ImageOptim.com API NuGet package</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ProjectUrl>https://github.com/MCLD/SampleImageOptimApi</ProjectUrl>
+    <RepositoryUrl>https://github.com/MCLD/SampleImageOptimApi</RepositoryUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <Title>Sample console app using the ImageOptimApi NuGet package</Title>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="ImageOptimApi" Version="0.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>

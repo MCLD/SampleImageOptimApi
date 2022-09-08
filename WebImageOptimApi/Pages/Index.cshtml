@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="username" class="form-label">ImageOptim.com Username</label>
+                    <input type="text" class="form-control" asp-for="Username" aria-describedby="usernameHelp" />
+                    <div id="usernameHelp" class="form-text">Need a username? Visit <a href="https://imageoptim.com/api/register" target="_blank">ImageOptim.com</a></div>
+                </div>
+                <div class="mb-3">
+                    <label for="FormFile" class="form-label">Image file</label>
+                    <input class="form-control" type="file" asp-for="FormFile">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Download optimized image</button>
+                <p><small><em>Please be patient, optimized image may take up to 30 seconds to download.</em></small></p>
+            </form>
+        </div>
+    </div>
+</div>

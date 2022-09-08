@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <Authors>Maricopa County Library District Web Team</Authors>
+    <Company>Maricopa County Library District</Company>
+    <Copyright>Copyright (c) 2022 Maricopa County Library District</Copyright>
+    <Description>Demonstrate using the ImageOptim.com API NuGet package</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ProjectUrl>https://github.com/MCLD/SampleImageOptimApi</ProjectUrl>
+    <RepositoryUrl>https://github.com/MCLD/SampleImageOptimApi</RepositoryUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <Title>Sample Web app using the ImageOptimApi NuGet package</Title>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImageOptimApi" Version="0.0.1" />
+  </ItemGroup>
+
+</Project>

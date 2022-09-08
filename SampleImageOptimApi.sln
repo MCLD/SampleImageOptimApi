@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleImageOptimApi", "ConsoleImageOptimApi\ConsoleImageOptimApi.csproj", "{F304CE38-E2A0-4671-9D09-070A66324300}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebImageOptimApi", "WebImageOptimApi\WebImageOptimApi.csproj", "{87486F5E-BAAE-485C-B610-540B0A49D0BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D40B2C0E-9B04-4CD6-A4B9-E232339B60B6}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F304CE38-E2A0-4671-9D09-070A66324300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F304CE38-E2A0-4671-9D09-070A66324300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F304CE38-E2A0-4671-9D09-070A66324300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F304CE38-E2A0-4671-9D09-070A66324300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87486F5E-BAAE-485C-B610-540B0A49D0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87486F5E-BAAE-485C-B610-540B0A49D0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87486F5E-BAAE-485C-B610-540B0A49D0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87486F5E-BAAE-485C-B610-540B0A49D0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8BC8F45-13A1-446A-9791-706342F80F69}
+	EndGlobalSection
+EndGlobal
