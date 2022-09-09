@@ -1,0 +1,40 @@
+name: "Build - action"
+
+on: [push, pull_request]
+
+jobs:
+  ops:
+    name: "ConsoleImageOptimApi Docker"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "ConsoleImageOptimApi Docker"
+        env:
+          BLD_DOCKER_IMAGE: consoleimageoptimapi
+          CR_OWNER: ${{secrets.CR_OWNER}}
+          CR_PASSWORD: ${{secrets.CR_PASSWORD}}
+          CR_USER: ${{secrets.CR_USER}}
+          GHCR_OWNER: ${{secrets.GHCR_OWNER}}
+          GHCR_PAT: ${{secrets.GHCR_PAT}}
+          GHCR_USER: ${{secrets.GHCR_USER}}
+        run: ./build.bash -df Dockerfile_ConsoleImageOptimApi
+
+  promenade:
+    name: "WebImageOptimApi Docker"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "WebImageOptimApi Docker"
+        env:
+          BLD_DOCKER_IMAGE: webimageoptimapi
+          CR_OWNER: ${{secrets.CR_OWNER}}
+          CR_PASSWORD: ${{secrets.CR_PASSWORD}}
+          CR_USER: ${{secrets.CR_USER}}
+          GHCR_OWNER: ${{secrets.GHCR_OWNER}}
+          GHCR_PAT: ${{secrets.GHCR_PAT}}
+          GHCR_USER: ${{secrets.GHCR_USER}}
+        run: ./build.bash -df Dockerfile_WebImageOptimApi
