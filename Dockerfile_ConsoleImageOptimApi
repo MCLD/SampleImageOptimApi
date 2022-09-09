@@ -1,0 +1,61 @@
+# Get build image
+FROM mcr.microsoft.com/dotnet/sdk:6.0@sha256:d83d1dc9886a5e2916b03b3c846b24750619d62c0d4039480df8a1c5b7342426 AS build
+
+WORKDIR /app
+
+# Copy source
+COPY . ./
+
+# Restore packages
+RUN dotnet restore
+
+# Publish
+RUN dotnet publish -c Release -o "/app/publish/WebImageOptimApi" "WebImageOptimApi"
+
+# Get runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0@sha256:30f462a50ad021c35ab3ebbbb8f16049c8d41499f7063a95bc68e7c69b0a97c4 as publish
+
+WORKDIR /app
+
+# Install curl for health monitoring
+RUN apt-get update && \
+apt-get install --no-install-recommends -y curl=7.74.0-1.3+deb11u2 && \
+rm -rf /var/lib/apt/lists/*
+
+# Bring in metadata via --build-arg
+ARG BRANCH=unknown
+ARG IMAGE_CREATED=unknown
+ARG IMAGE_REVISION=unknown
+ARG IMAGE_VERSION=unknown
+
+# Configure image labels
+LABEL branch=$branch \
+maintainer="Maricopa County Library District developers <development@mcldaz.org>" \
+org.opencontainers.image.authors="Maricopa County Library District developers <development@mcldaz.org>" \
+org.opencontainers.image.created=$IMAGE_CREATED \
+org.opencontainers.image.description="Console project to exercise the ImageOptimApi NuGet package" \
+org.opencontainers.image.documentation="https://github.com/MCLD/SampleImageOptimApi" \
+org.opencontainers.image.licenses="MIT" \
+org.opencontainers.image.revision=$IMAGE_REVISION \
+org.opencontainers.image.source="https://github.com/MCLD/SampleImageOptimApi" \
+org.opencontainers.image.title="WebImageOptimApi" \
+org.opencontainers.image.url="https://github.com/MCLD/SampleImageOptimApi" \
+org.opencontainers.image.vendor="Maricopa County Library District" \
+org.opencontainers.image.version=$IMAGE_VERSION
+
+# Default image environment variable settings
+ENV org.opencontainers.image.created=$IMAGE_CREATED \
+org.opencontainers.image.revision=$IMAGE_REVISION \
+org.opencontainers.image.version=$IMAGE_VERSION
+
+# Copy source
+COPY --from=build "/app/publish/WebImageOptimAPi" .
+
+# Port 80 for http
+EXPOSE 80
+
+# Configure health check
+HEALTHCHECK CMD curl --fail http://localhost/health/ || exit
+
+# Set entrypoint
+ENTRYPOINT ["dotnet", "WebImageOptimApi.dll"]
