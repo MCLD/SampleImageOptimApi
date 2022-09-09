@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ImageOptimApi" Version="0.0.1" />
+    <PackageReference Include="ImageOptimApi" Version="0.0.3" />
   </ItemGroup>
 
 </Project>
