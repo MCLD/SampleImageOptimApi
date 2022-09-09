@@ -34,11 +34,13 @@ namespace WebImageOptimApi.Pages
                 return StatusCode(StatusCodes.Status500InternalServerError, "No uploaded image supplied.");
             }
 
-            string filename = Path.Combine(Path.GetTempPath(), FormFile.FileName);
-            using var stream = new FileStream(filename, FileMode.Create);
+            string filename = Path.Combine(Path.GetTempPath(),
+                Path.GetFileNameWithoutExtension(Path.GetTempFileName())
+                + Path.GetExtension(FormFile.FileName));
             OptimizedImageResult optimized;
             try
             {
+                using var stream = new FileStream(filename, FileMode.Create);
                 await FormFile.CopyToAsync(stream);
                 stream.Close();
                 _client.Username = Username;
@@ -58,9 +60,13 @@ namespace WebImageOptimApi.Pages
             {
                 if (optimized.Status == Status.Success)
                 {
+                    string newFilename = _client.Format == Format.Auto
+                        ? FormFile.FileName
+                        : Path.GetFileNameWithoutExtension(FormFile.FileName)
+                            + GetExtension(_client.Format);
                     var provider = new FileExtensionContentTypeProvider();
                     provider.TryGetContentType(FormFile.FileName, out var contentType);
-                    return File(optimized.File, contentType ?? "application/octet-stream", FormFile.FileName);
+                    return File(optimized.File, contentType ?? "application/octet-stream", newFilename);
                 }
                 else
                 {
@@ -74,5 +80,14 @@ namespace WebImageOptimApi.Pages
                 return StatusCode(StatusCodes.Status500InternalServerError, "No optimized image returned.");
             }
         }
+
+        private static string GetExtension(Format format) => format switch
+        {
+            Format.Png => ".png",
+            Format.Jpeg => ".jpg",
+            Format.WebM => ".webm",
+            Format.H264 => ".h264",
+            _ => string.Empty,
+        };
     }
 }
