@@ -11,13 +11,13 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <ProjectUrl>https://github.com/MCLD/SampleImageOptimApi</ProjectUrl>
     <RepositoryUrl>https://github.com/MCLD/SampleImageOptimApi</RepositoryUrl>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Title>Sample Web app using the ImageOptimApi NuGet package</Title>
-    <Version>1.0.1</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ImageOptimApi" Version="1.0.0" />
+    <PackageReference Include="ImageOptimApi" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
