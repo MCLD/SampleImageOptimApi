@@ -21,6 +21,24 @@
                     <label for="FormFile" class="form-label">Image file</label>
                     <input class="form-control" type="file" asp-for="FormFile">
                 </div>
+                <div class="mb-3">
+                    <select class="form-select" asp-for="FileFormat">
+                        <option selected>Automatic format selection</option>
+                        <option value="@ImageOptimApi.Format.H264">H.264</option>
+                        <option value="@ImageOptimApi.Format.Jpeg">JPEG</option>
+                        <option value="@ImageOptimApi.Format.Png">PNG</option>
+                        <option value="@ImageOptimApi.Format.WebM">WebM</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Optional resize</span>
+                        <span class="input-group-text">Width</span>
+                        <input type="number" class="form-control" maxlength="5" asp-for="Width">
+                        <span class="input-group-text">Height</span>
+                        <input type="number" class="form-control" maxlength="5" asp-for="Height">
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-outline-primary">Download optimized image</button>
                 <p><small><em>Please be patient, optimized image may take up to 30 seconds to download.</em></small></p>
             </form>

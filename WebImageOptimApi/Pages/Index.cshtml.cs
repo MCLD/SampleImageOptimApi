@@ -17,10 +17,19 @@ namespace WebImageOptimApi.Pages
         }
 
         [BindProperty]
+        public Format? FileFormat { get; set; }
+
+        [BindProperty]
         public IFormFile? FormFile { get; set; }
 
         [BindProperty]
+        public int? Height { get; set; }
+
+        [BindProperty]
         public string? Username { get; set; }
+
+        [BindProperty]
+        public int? Width { get; set; }
 
         public void OnGet()
         {
@@ -37,12 +46,25 @@ namespace WebImageOptimApi.Pages
             string filename = Path.Combine(Path.GetTempPath(),
                 Path.GetFileNameWithoutExtension(Path.GetTempFileName())
                 + Path.GetExtension(FormFile.FileName));
+
             OptimizedImageResult optimized;
             try
             {
                 using var stream = new FileStream(filename, FileMode.Create);
                 await FormFile.CopyToAsync(stream);
                 stream.Close();
+                if (FileFormat.HasValue)
+                {
+                    _client.Format = FileFormat.Value;
+                }
+                if (Width > 0)
+                {
+                    _client.Width = Width.Value;
+                }
+                if (Height > 0)
+                {
+                    _client.Height = Height.Value;
+                }
                 _client.Username = Username;
                 optimized = await _client.OptimizeAsync(filename);
                 _logger.LogInformation("Image optimization took {ElapsedSeconds}s", optimized.ElapsedSeconds);
@@ -65,7 +87,7 @@ namespace WebImageOptimApi.Pages
                         : Path.GetFileNameWithoutExtension(FormFile.FileName)
                             + GetExtension(_client.Format);
                     var provider = new FileExtensionContentTypeProvider();
-                    provider.TryGetContentType(FormFile.FileName, out var contentType);
+                    provider.TryGetContentType(newFilename, out var contentType);
                     return File(optimized.File, contentType ?? "application/octet-stream", newFilename);
                 }
                 else
