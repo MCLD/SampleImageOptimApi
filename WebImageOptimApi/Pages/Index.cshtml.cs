@@ -8,11 +8,13 @@ namespace WebImageOptimApi.Pages
     public class IndexModel : PageModel
     {
         private readonly Client _client;
+        private readonly IConfiguration _config;
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger, Client client)
+        public IndexModel(Client client, IConfiguration config, ILogger<IndexModel> logger)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
+            _config = config ?? throw new ArgumentNullException(nameof(config));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -26,6 +28,9 @@ namespace WebImageOptimApi.Pages
         public int? Height { get; set; }
 
         [BindProperty]
+        public int? HighDpi { get; set; }
+
+        [BindProperty]
         public string? Username { get; set; }
 
         [BindProperty]
@@ -33,6 +38,10 @@ namespace WebImageOptimApi.Pages
 
         public void OnGet()
         {
+            if (!string.IsNullOrEmpty(_config["ImageOptimUsername"]))
+            {
+                Username = _config["ImageOptimUsername"];
+            }
         }
 
         public async Task<IActionResult> OnPost()
@@ -40,7 +49,8 @@ namespace WebImageOptimApi.Pages
             if (FormFile == null)
             {
                 _logger.LogError("No uploaded image supplied.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "No uploaded image supplied.");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "No uploaded image supplied.");
             }
 
             string filename = Path.Combine(Path.GetTempPath(),
@@ -65,14 +75,22 @@ namespace WebImageOptimApi.Pages
                 {
                     _client.Height = Height.Value;
                 }
+                if (HighDpi > 1)
+                {
+                    _client.HighDpi = HighDpi == 3
+                        ? ImageOptimApi.HighDpi.Dpi3x
+                        : ImageOptimApi.HighDpi.Dpi2x;
+                }
                 _client.Username = Username;
                 optimized = await _client.OptimizeAsync(filename);
-                _logger.LogInformation("Image optimization took {ElapsedSeconds}s", optimized.ElapsedSeconds);
+                _logger.LogInformation("Image optimization took {ElapsedSeconds}s",
+                    optimized.ElapsedSeconds);
             }
             catch (ParameterException pex)
             {
                 _logger.LogError("Error with image submission: ", pex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error with image submission: {pex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error with image submission: {pex.Message}");
             }
             finally
             {
@@ -88,18 +106,24 @@ namespace WebImageOptimApi.Pages
                             + GetExtension(_client.Format);
                     var provider = new FileExtensionContentTypeProvider();
                     provider.TryGetContentType(newFilename, out var contentType);
-                    return File(optimized.File, contentType ?? "application/octet-stream", newFilename);
+                    return File(optimized.File,
+                        contentType ?? "application/octet-stream",
+                        newFilename);
                 }
                 else
                 {
-                    _logger.LogError("Problem optimizing image: {ErrorStatus} {ErrorMessage}", optimized.Status, optimized.StatusMessage);
-                    return StatusCode(StatusCodes.Status500InternalServerError, $"{optimized.Status}: {optimized.StatusMessage}");
+                    _logger.LogError("Problem optimizing image: {ErrorStatus} {ErrorMessage}",
+                        optimized.Status,
+                        optimized.StatusMessage);
+                    return StatusCode(StatusCodes.Status500InternalServerError,
+                        $"{optimized.Status}: {optimized.StatusMessage}");
                 }
             }
             else
             {
                 _logger.LogError("No optimized image returned.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "No optimized image returned.");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "No optimized image returned.");
             }
         }
 

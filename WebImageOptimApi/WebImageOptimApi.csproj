@@ -13,7 +13,8 @@
     <RepositoryUrl>https://github.com/MCLD/SampleImageOptimApi</RepositoryUrl>
     <TargetFramework>net7.0</TargetFramework>
     <Title>Sample Web app using the ImageOptimApi NuGet package</Title>
-    <Version>1.1.1</Version>
+    <Version>1.2.0</Version>
+    <UserSecretsId>de1b13ca-8e6a-4840-97f1-9c91fff9d297</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

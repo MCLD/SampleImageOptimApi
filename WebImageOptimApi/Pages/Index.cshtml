@@ -22,6 +22,7 @@
                     <input class="form-control" type="file" asp-for="FormFile">
                 </div>
                 <div class="mb-3">
+                    <label for="FileFormat" class="form-label">Output file format</label>
                     <select class="form-select" asp-for="FileFormat">
                         <option selected>Automatic format selection</option>
                         <option value="@ImageOptimApi.Format.H264">H.264</option>
@@ -31,13 +32,21 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Resize (optional)</label>
                     <div class="input-group">
-                        <span class="input-group-text">Optional resize</span>
                         <span class="input-group-text">Width</span>
                         <input type="number" class="form-control" maxlength="5" asp-for="Width">
                         <span class="input-group-text">Height</span>
                         <input type="number" class="form-control" maxlength="5" asp-for="Height">
                     </div>
+                </div>
+                <div class="mb-3">
+                    <label for="HighDpi" class="form-label">High-DPI selection (for <code>srcset</code>)</label>
+                    <select class="form-select" asp-for="HighDpi">
+                        <option value="1" selected>1x</option>
+                        <option value="2">2x</option>
+                        <option value="3">3x</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-outline-primary">Download optimized image</button>
                 <p><small><em>Please be patient, optimized image may take up to 30 seconds to download.</em></small></p>
